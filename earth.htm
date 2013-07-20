@@ -1,0 +1,133 @@
+
+<head>
+
+<meta http-equiv="content-type" 
+content="text/html; charset=utf-8"/>
+
+<title>Google Maps JavaScript API 
+Example</title>
+
+<script src="http://maps.google.com/maps?file=api&amp;v=3&amp;key=AIzaSyDnHNRVGUfi9SdwBmUZxkb0dPZhfQfCEII&sensor=false" 
+
+type="text/javascript"></script>
+
+<script type="text/javascript">
+
+    var map;  
+   
+    function initializeSetMapType(maptype) {
+		createMap2(maptype);
+		initialize();
+    }
+
+
+    function initialize() {      
+         
+	createMap();
+	
+	GEvent.addListener(map, "moveend", function() { 
+		var center = map.getCenter();  
+		var lat = map.getCenter().lat();
+		var lng = map.getCenter().lng();
+		var zoom = map.getZoom();		
+		document.title = 'NEWPOS:' + lat + '|' + lng + '~' + zoom;
+        });
+    }    
+
+    function createMap() {
+	if (!map && GBrowserIsCompatible()) {
+		map = new GMap2(document.getElementById("map_canvas"));   
+		map.setCenter(new GLatLng(00, 0), 3);      
+		map.setMapType(G_PHYSICAL_MAP);
+		map.setUIToDefault();
+       	}
+    }
+
+    function createMap2(maptype) {
+	if (!map && GBrowserIsCompatible()) {
+		map = new GMap2(document.getElementById("map_canvas"));   
+		map.setCenter(new GLatLng(00, 0), 3);      
+		map.setMapType(maptype);
+		map.setUIToDefault();
+       	}
+    }
+
+
+    function drawPolygon(lat, lng, lat1, lng2, fillcolour, opacity) {
+
+	// Create an array with points   
+		var points = [   
+		new GLatLng(lat, lng),   
+		new GLatLng(lat1, lng),   
+		new GLatLng(lat1, lng2),
+		new GLatLng(lat, lng2),   
+		new GLatLng(lat, lng)];
+  
+	// Create polygon   
+		
+		var polygon = new GPolygon(points, '#000000', 1, .5, fillcolour, opacity);   
+  
+	// Add the polygon to the map using map.addOverlay()   
+	
+		map.addOverlay(polygon);  
+    }
+
+
+   function drawPolyline(lat, lng, lat2, lng2) {
+      
+	// Create an array with points   
+		var points = [   
+		new GLatLng(lat, lng),   
+		new GLatLng(lat2, lng2)];
+  
+	// Create polyline   
+		var polyline = new GPolyline(points, '#ff0000', 1, .1);   
+  
+	// Add the polyline to the map using map.addOverlay()   
+		map.addOverlay(polygon);  
+    }
+
+
+    function clearoverlay() {
+	
+   		map.clearOverlays()
+    }
+    
+    
+    function getLat() {
+		createMap();
+		document.title = map.getCenter().lat();
+    }    
+
+    function getLng() {
+		createMap();
+		document.title = map.getCenter().lng();
+    }    
+
+    
+    function getZoomValue() {
+		createMap();
+		document.title = map.getZoom();
+    }    
+
+
+    function moveTo(lat,lng,zoom) {    
+		createMap();     
+		map.setCenter(new GLatLng(lat, lng), zoom);
+    }
+
+
+</script>
+
+</head>
+<body 
+onload="" style="height: 100%; margin: 0; pading: 0; overflow: none;" onunload="GUnload()">
+
+<table height="100%" width="100%">
+<tr style="height: 100%"><td style="height: 100%">
+<div id="map_canvas" style="width: 100%; height: 100%"></div>
+</td></tr>
+</table>
+
+</body>
+</html>
